@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Card from './Card/Card'
 import DrawButton from './DrawButton/DrawButton'
+import firebase from 'firebase/app'
+import 'firebase/database'
 
 import {DB_CONFIG} from './Config/Firebase/db_config'
 
@@ -10,6 +12,8 @@ class App extends Component {
   constructor(props){
     super(props);
 
+    this.app = firebase.initializeApp(DB_CONFIG)
+    this.database = this.app.database().ref().child('cards')
     this.updateCard = this.updateCard.bind(this)
 
     this.state = {
