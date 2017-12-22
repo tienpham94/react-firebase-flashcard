@@ -30,9 +30,18 @@ class App extends Component {
   componentWillMount(){
     const currentCards = this.state.cards;
 
-    this.setState({
-      cards: currentCards,
-      currentCard: this.getRandomCard(currentCards)
+    this.database.on('child_added', snap => {
+      currentCards.push({
+        id: snap.key,
+        eng: snap.val().eng,
+        han: snap.val().han,
+        pin: snap.val().pin
+      })
+      this.setState({
+        cards: currentCards,
+        currentCard: this.getRandomCard(currentCards)
+      })
+
     })
   }
 
